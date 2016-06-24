@@ -10,7 +10,7 @@ io.sockets.on('connection', function(socket) {
   console.log('connected to socket');
 });
 
-app.use(__dirname + "/index.html"));
+app.use(__dirname + "/index.html");
 
 r.connect({ db: 'testdb' }).then(function(conn) {
   r.table('orders').changes().run(conn, function(err, cursor) {
