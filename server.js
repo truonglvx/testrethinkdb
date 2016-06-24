@@ -1,10 +1,10 @@
 
-var express = require("express");
-var r = require("rethinkdb");
+var express = require('express');
+var r = require('rethinkdb');
 
 var app = express();
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
 console.log("App is listening on 8008");
 
