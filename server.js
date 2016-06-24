@@ -1,18 +1,16 @@
-
-var express = require('express');
-var r = require('rethinkdb');
+var sockio = require("socket.io");
+var express = require("express");
+var r = require("rethinkdb");
 
 var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-
+var io = sockio.listen(app.listen(8008));
 console.log("App is listening on 8008");
 
-io.on('connection', function(socket) {
+io.sockets.on('connection', function(socket) {
   console.log('connected to socket');
 });
 
-app.use(express.static(__dirname + "/index.html"));
+app.use(express.static(__dirname + "/public"));
 
 r.connect({ db: 'testdb' }).then(function(conn) {
   r.table('orders').changes().run(conn, function(err, cursor) {
@@ -21,6 +19,3 @@ r.connect({ db: 'testdb' }).then(function(conn) {
     });
   });
 });
-
-
-server.listen(8080);
