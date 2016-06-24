@@ -9,6 +9,7 @@
   "author": "truonglvx",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.14.0",
     "rethink": "^1.4.0",
     "socketio": "^1.0.0"
   }
