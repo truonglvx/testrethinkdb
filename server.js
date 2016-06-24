@@ -1,12 +1,14 @@
-var sockio = require("socket.io");
+
 var express = require("express");
 var r = require("rethinkdb");
 
 var app = express();
-var io = sockio.listen(app.listen(8008));
+var server = require("http").createServer(app);
+var io = require("socket.io")(server);
+
 console.log("App is listening on 8008");
 
-io.sockets.on('connection', function(socket) {
+io.on('connection', function(socket) {
   console.log('connected to socket');
 });
 
@@ -19,3 +21,6 @@ r.connect({ db: 'testdb' }).then(function(conn) {
     });
   });
 });
+
+
+server.listen(8080);
