@@ -1,20 +1,19 @@
-var io = require("socket.io");
-var app = require("express")();
-var rtDB = require("rethinkdb");
+var sockio = require("socket.io");
+var express = require("express");
+var r = require("rethinkdb");
 
-app.listen(8080);
-io.listen(app);
+var app = express();
+var io = sockio.listen(app.listen(8008));
+console.log("App is listening on 8008");
 
-console.log("app is listening on 8080");
-
-io.on("connection", function(socket){
-	console.log("connected to socket");
+io.sockets.on('connection', function(socket) {
+  console.log('connected to socket');
 });
 
-app.use(__dirname + "index.html");
+app.use(__dirname + "/index.html"));
 
-rtDB.connect({ db: 'testdb' }).then(function(conn) {
-  rtDB.table('orders').changes().run(conn, function(err, cursor) {
+r.connect({ db: 'testdb' }).then(function(conn) {
+  r.table('orders').changes().run(conn, function(err, cursor) {
     cursor.each(function(err, item) {
       io.emit("orders_updated", item);
     });
