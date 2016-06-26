@@ -3,14 +3,18 @@ var express = require("express");
 var r = require("rethinkdb");
 
 var app = express();
-var io = sockio.listen(app.listen(8008));
-console.log("App is listening on 8008");
+var io = sockio.listen(app.listen(3000));
+console.log("App is listening on 3000");
 
 io.sockets.on('connection', function(socket) {
   console.log('connected to socket');
 });
 
 app.use(express.static(__dirname + "/public"));
+
+app.get('/', (req, res) => {
+		console.log("home page");
+});
 
 r.connect({ db: 'testdb' }).then(function(conn) {
   r.table('orders').changes().run(conn, function(err, cursor) {
