@@ -19,6 +19,7 @@ app.get('/home', (req, res) => {
 r.connect({ db: 'testdb' }).then(function(conn) {
   r.table('orders').changes().run(conn, function(err, cursor) {
     cursor.each(function(err, item) {
+    	console.log("data changed");
       io.emit("orders_updated", item);
     });
   });
