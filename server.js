@@ -12,7 +12,7 @@ io.sockets.on('connection', function(socket) {
 
 app.use(express.static(__dirname + "/public"));
 
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
 		console.log("home page");
 });
 
